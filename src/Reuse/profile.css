@@ -1,0 +1,9 @@
+.image {
+  width: 60px;
+  height: 60px;
+}
+.image img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,21 @@
+.add {
+  position: absolute;
+  left: 330px;
+  top: 48px;
+}
+.add img {
+  object-fit: contain;
+  padding: 2px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background-color: #009bfb;
+}
+@media (max-width: 768px) {
+  .add {
+    left: 80px;
+
+    top: 50px;
+  }
+}
