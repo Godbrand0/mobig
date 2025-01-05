@@ -1,56 +1,33 @@
-import React from "react";
+import React, { useMemo } from "react";
+import useFetch from "../Api/useFetch";
 import file from "../assets/Profile-Pic-S.png";
 import Add from "../Reuse/Add";
 import Profile from "../Reuse/Profile";
 
 export default function Story() {
-  const storys = [
-    {
-      id: "0",
-      profile: Profile,
-      name: "John",
-    },
-    {
-      id: "1",
-      profile: Profile,
-      name: "Laura",
-    },
-    {
-      id: "2",
-      profile: Profile,
-      name: "nikki",
-    },
-    {
-      id: "3",
-      profile: Profile,
-      name: "Elani",
-    },
-    {
-      id: "4",
-      profile: Profile,
-      name: "Tomaska",
-    },
-    {
-      id: "4",
-      profile: Profile,
-      name: "Tomaska",
-    },
-    {
-      id: "4",
-      profile: Profile,
-      name: "Tomaska",
-    },
-    {
-      id: "4",
-      profile: Profile,
-      name: "Tomaska",
-    },
-    {
-      id: "4",
-      profile: Profile,
-      name: "Tomaska",
-    },
-  ];
+  const options = useMemo(
+    () => ({
+      method: "GET",
+      url: "https://instagram-scraper-api2.p.rapidapi.com/v1/following",
+      params: {
+        username_or_id_or_url: "mrbeast",
+        url_embed_safe: "true",
+      },
+      headers: {
+        "x-rapidapi-key": "64728cf656msh1775344a295e74dp1dd74ajsne3557ca01283",
+        "x-rapidapi-host": "instagram-scraper-api2.p.rapidapi.com",
+      },
+    }),
+    []
+  );
+  const { data, loading, error } = useFetch(options);
+  const fetchedData = data?.data?.items || [];
+  const stories = Array.isArray(fetchedData) ? fetchedData : [];
+  console.log({ fetchedData });
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div className="story_board">
       <div className="story_left">
@@ -58,10 +35,10 @@ export default function Story() {
         <Add />
       </div>
       <div className="story_grid">
-        {storys.map((story) => (
-          <div key={story.id} className="story_right">
-            <Profile />
-            <p>{story.name}</p>
+        {stories.map((story, index) => (
+          <div className="story_right" key={index}>
+            <img src={story.profile_pic_url} alt="" />
+            <p>{story.username}</p>
           </div>
         ))}
       </div>
